@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bugs6o2qc7gvt"]
+
+[sub_resource type="Sky" id="Sky_7l82g"]
+
+[sub_resource type="Environment" id="Environment_e2c3g"]
+background_mode = 2
+sky = SubResource("Sky_7l82g")
+ambient_light_source = 3
+
+[node name="Scene" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_e2c3g")
