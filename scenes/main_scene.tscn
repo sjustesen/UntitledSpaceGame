@@ -1,13 +1,53 @@
-[gd_scene load_steps=3 format=3 uid="uid://bugs6o2qc7gvt"]
+[gd_scene load_steps=11 format=3 uid="uid://bugs6o2qc7gvt"]
+
+[ext_resource type="Shader" path="res://shaders/sky.gdshader" id="1_354h7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x08j7"]
+shader = ExtResource("1_354h7")
 
 [sub_resource type="Sky" id="Sky_7l82g"]
+sky_material = SubResource("ShaderMaterial_x08j7")
 
 [sub_resource type="Environment" id="Environment_e2c3g"]
-background_mode = 2
+resource_local_to_scene = true
+background_color = Color(0, 0.87451, 0.784314, 1)
 sky = SubResource("Sky_7l82g")
 ambient_light_source = 3
+ambient_light_color = Color(0.823529, 0.670588, 0.843137, 1)
 
-[node name="Scene" type="Node3D"]
+[sub_resource type="CanvasTexture" id="CanvasTexture_xbexy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u72q3"]
+albedo_color = Color(1, 0.270588, 1, 1)
+albedo_texture = SubResource("CanvasTexture_xbexy")
+ao_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xx7sy"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_nq4ff"]
+
+[sub_resource type="Skin" id="Skin_qthcr"]
+
+[sub_resource type="Environment" id="Environment_7aact"]
+
+[node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e2c3g")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.40254, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+top_level = true
+material_override = SubResource("StandardMaterial3D_u72q3")
+material_overlay = SubResource("StandardMaterial3D_xx7sy")
+mesh = SubResource("PlaneMesh_nq4ff")
+skin = SubResource("Skin_qthcr")
+skeleton = NodePath("")
+
+[node name="Camera3D" type="Camera3D" parent="MeshInstance3D"]
+transform = Transform3D(0.0995466, 0.00152686, -0.00938867, 0.00296455, 0.088807, 0.0458752, 0.00903825, -0.0459455, 0.0883591, 0, 0.693682, 1.2202)
+environment = SubResource("Environment_7aact")
+current = true
