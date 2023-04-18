@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bugs6o2qc7gvt"]
+[gd_scene load_steps=15 format=3 uid="uid://bugs6o2qc7gvt"]
 
 [ext_resource type="Shader" path="res://shaders/sky.gdshader" id="1_354h7"]
 [ext_resource type="PackedScene" uid="uid://1oe676h4p6y8" path="res://models/Player.tscn" id="2_na6dk"]
@@ -37,6 +37,12 @@ background_color = Color(0, 0.87451, 0.784314, 1)
 sky = SubResource("Sky_cc5wp")
 ambient_light_source = 3
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_30sgy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_apy34"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jcnwa"]
+
 [node name="World" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -59,7 +65,18 @@ shape = SubResource("BoxShape3D_i6jh2")
 environment = SubResource("Environment_e2c3g")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, -14.4907, 1, -3.43022)
+transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, -14.4907, 1, -13.4302)
+current = true
 
 [node name="Player" parent="." instance=ExtResource("2_na6dk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_30sgy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("CapsuleShape3D_apy34")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+mesh = SubResource("BoxMesh_jcnwa")
