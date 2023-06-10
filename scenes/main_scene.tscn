@@ -1,18 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bugs6o2qc7gvt"]
+[gd_scene load_steps=17 format=3 uid="uid://d1s6pyk73w6s0"]
 
 [ext_resource type="Texture2D" uid="uid://cjw40kmnex8u6" path="res://materials/mars/2k_mars.jpg" id="1_evfrv"]
 [ext_resource type="Texture2D" uid="uid://p1gejrgrssjt" path="res://materials/skybox/cubemap.png" id="1_u2tm0"]
 [ext_resource type="PackedScene" uid="uid://1oe676h4p6y8" path="res://models/Player.tscn" id="2_na6dk"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2swg"]
-albedo_texture = ExtResource("1_evfrv")
-metallic = 0.3
-distance_fade_mode = 1
-
-[sub_resource type="BoxMesh" id="BoxMesh_1qavs"]
-size = Vector3(1000, 2, 1000)
-
-[sub_resource type="Skin" id="Skin_v3enq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_idu4y"]
 panorama = ExtResource("1_u2tm0")
@@ -23,23 +13,55 @@ sky_material = SubResource("PanoramaSkyMaterial_idu4y")
 [sub_resource type="Environment" id="Environment_7xubx"]
 background_mode = 2
 sky = SubResource("Sky_qmcnv")
-ambient_light_color = Color(0, 0, 0.933333, 1)
+sky_custom_fov = 58.7
+reflected_light_source = 1
+tonemap_mode = 3
+tonemap_exposure = 1.32
+volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(1, 0.431373, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p2clu"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_6o24c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2swg"]
+albedo_texture = ExtResource("1_evfrv")
+metallic = 0.3
+normal_texture = SubResource("ImageTexture_6o24c")
+distance_fade_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obol0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1qavs"]
+material = SubResource("ShaderMaterial_obol0")
+size = Vector3(1000, 2, 1000)
+
+[sub_resource type="Skin" id="Skin_v3enq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_svp4n"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jcnwa"]
+
+[sub_resource type="Skin" id="Skin_suvqh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i6jh2"]
 size = Vector3(1000, 2, 1000)
 
-[sub_resource type="BoxMesh" id="BoxMesh_jcnwa"]
-
 [node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7xubx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 5, -3)
 shadow_enabled = true
 
 [node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.164677, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_p2clu")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0265079, -1, 0)
@@ -49,12 +71,22 @@ mesh = SubResource("BoxMesh_1qavs")
 skin = SubResource("Skin_v3enq")
 skeleton = NodePath("")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_7xubx")
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, -14.4907, 1, -13.4302)
+transform = Transform3D(1, 0, 0, 0, 0.97375, 0.22762, 0, -0.22762, 0.97375, -0.16856, 3.32517, 3.22217)
 current = true
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.76837e-07, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.53674e-07, 0, 0)
+shape = SubResource("CapsuleShape3D_svp4n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(0.625134, 0, 0.780518, 0, 1, 0, -0.780518, 0, 0.625134, 4.76837e-07, 0, -11.2116)
+mesh = SubResource("BoxMesh_jcnwa")
+skin = SubResource("Skin_suvqh")
+skeleton = NodePath("")
 
 [node name="Player" parent="." instance=ExtResource("2_na6dk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -63,8 +95,3 @@ up_direction = Vector3(0, -1, 0)
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.835323, 0)
 shape = SubResource("BoxShape3D_i6jh2")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11.2116)
-mesh = SubResource("BoxMesh_jcnwa")
-skeleton = NodePath("")

@@ -9,7 +9,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func _input(event):
-	pass
+	if event is InputEventMouse:
+		pass
 
 func _physics_process(delta):
 	if Input.is_action_pressed("player_move_left"):
