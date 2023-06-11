@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://d1s6pyk73w6s0"]
+[gd_scene load_steps=19 format=3 uid="uid://d1s6pyk73w6s0"]
 
 [ext_resource type="Texture2D" uid="uid://cjw40kmnex8u6" path="res://materials/mars/2k_mars.jpg" id="1_evfrv"]
 [ext_resource type="Texture2D" uid="uid://p1gejrgrssjt" path="res://materials/skybox/cubemap.png" id="1_u2tm0"]
@@ -41,11 +41,18 @@ size = Vector3(1000, 2, 1000)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_48rh1"]
 
+[sub_resource type="MeshTexture" id="MeshTexture_14eoa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8oyt7"]
+metallic = 1.0
+metallic_texture = SubResource("MeshTexture_14eoa")
+
 [sub_resource type="BoxMesh" id="BoxMesh_jcnwa"]
+material = SubResource("StandardMaterial3D_8oyt7")
 
 [sub_resource type="Skin" id="Skin_suvqh"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_5luve"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_rcbsj"]
 
 [node name="World" type="Node3D"]
 
@@ -61,7 +68,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 platform_on_leave = 2
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1.01917, 0, 0, 0, 1, 0, 0, 0, 1.25397, 0.0803075, 0.0321202, -0.0217348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0803075, 0.0321202, -0.0217348)
 shape = SubResource("CapsuleShape3D_47eem")
 
 [node name="Camera3D2" type="Camera3D" parent="Player"]
@@ -82,14 +89,13 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, -0.0242164, 0)
 shape = SubResource("WorldBoundaryShape3D_48rh1")
 
-[node name="RigidBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79734, 0, 0)
+[node name="Stone" type="StaticBody3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stone"]
 transform = Transform3D(-2.6959, 0, 4.10155, 0, 1, 0, 3.36599, 0, 3.28502, 0, 0, 0)
 mesh = SubResource("BoxMesh_jcnwa")
 skin = SubResource("Skin_suvqh")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-shape = SubResource("WorldBoundaryShape3D_5luve")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stone"]
+shape = SubResource("BoxShape3D_rcbsj")
