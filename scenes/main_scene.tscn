@@ -21,6 +21,8 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(1, 0.431373, 1, 1)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_47eem"]
+
 [sub_resource type="ImageTexture" id="ImageTexture_6o24c"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2swg"]
@@ -45,9 +47,6 @@ size = Vector3(1000, 2, 1000)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_5luve"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_i6jh2"]
-size = Vector3(1000, 2, 1000)
-
 [node name="World" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -56,6 +55,18 @@ environment = SubResource("Environment_7xubx")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 5, -0.54043)
 shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_na6dk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+platform_on_leave = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1.01917, 0, 0, 0, 1, 0, 0, 0, 1.25397, 0.0803075, 0.0321202, -0.0217348)
+shape = SubResource("CapsuleShape3D_47eem")
+
+[node name="Camera3D2" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.97375, 0.22762, 0, -0.22762, 0.97375, -0.16856, 2.32517, 3.22217)
+current = true
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
@@ -68,6 +79,7 @@ skin = SubResource("Skin_v3enq")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, -0.0242164, 0)
 shape = SubResource("WorldBoundaryShape3D_48rh1")
 
 [node name="RigidBody3D" type="StaticBody3D" parent="."]
@@ -81,15 +93,3 @@ skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("WorldBoundaryShape3D_5luve")
-
-[node name="Player" parent="." instance=ExtResource("2_na6dk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-platform_on_leave = 2
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.835323, 0)
-shape = SubResource("BoxShape3D_i6jh2")
-
-[node name="Camera3D2" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.97375, 0.22762, 0, -0.22762, 0.97375, -0.16856, 2.32517, 3.22217)
-current = true
