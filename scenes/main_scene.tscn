@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d1s6pyk73w6s0"]
+[gd_scene load_steps=20 format=3 uid="uid://d1s6pyk73w6s0"]
 
 [ext_resource type="Texture2D" uid="uid://cjw40kmnex8u6" path="res://materials/mars/2k_mars.jpg" id="1_evfrv"]
 [ext_resource type="Texture2D" uid="uid://p1gejrgrssjt" path="res://materials/skybox/cubemap.png" id="1_u2tm0"]
@@ -41,6 +41,8 @@ size = Vector3(1000, 2, 1000)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_48rh1"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r3gmy"]
+
 [sub_resource type="MeshTexture" id="MeshTexture_14eoa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8oyt7"]
@@ -64,11 +66,10 @@ transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_na6dk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-platform_on_leave = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.60954, 0.954319, 0)
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0803075, 0.0321202, -0.0217348)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0462604, 0)
 shape = SubResource("CapsuleShape3D_47eem")
 
 [node name="Camera3D2" type="Camera3D" parent="Player"]
@@ -90,6 +91,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, -0.0242164, 0)
 shape = SubResource("WorldBoundaryShape3D_48rh1")
 
 [node name="Stone" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_r3gmy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Stone"]
 transform = Transform3D(-2.6959, 0, 4.10155, 0, 1, 0, 3.36599, 0, 3.28502, 0, 0, 0)
