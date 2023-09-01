@@ -2,5 +2,5 @@ Some day in a not too distant future, your favorite space game will shut down it
 Imagine if we could build something that everybody with a computer with modest specs could run and play for free forever... Hmm.. :)
 
 This is UntitledSpacegame. 
-Let's build something cool, lasting and open source - no deadlines.
+Let's build something cool, lasting and open source - no strings attached, no deadlines, no boundaries.
 
